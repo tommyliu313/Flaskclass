@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect
 from config import Config
-from forms import LoginForm
+from app.forms import LoginForm
 
 app = Flask(__name__)
 
