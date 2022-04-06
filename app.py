@@ -4,7 +4,7 @@ from forms import LoginForm
 
 app = Flask(__name__)
 
-
+app.config.from_object(Config)
 @app.route('/')
 @app.route('/index')
 def index():
@@ -22,5 +22,6 @@ def login():
         flash('Login Succeed for user {}, remember_me={}').format(form.username.data,form.remember_me.data)
         return redirect('/index')
     return render_template('login.html', title='Sign In', form=form)
+
 if __name__ == '__main__':
     app.run()
