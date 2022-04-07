@@ -54,5 +54,6 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Sign In', form=form)
+
 if __name__ == '__main__':
     app.run()
