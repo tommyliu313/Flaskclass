@@ -3,8 +3,8 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user,current_user,login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from app.models import User, Post
 
 @app.before_request
 def before_request():
@@ -12,8 +12,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
-@app.route('/')
-@app.route('/index')
+@app.route('/',methods=['GET','POST'])
+@app.route('/index',methods=['GET','POST'])
 @login_required
 def index():
     user = {'username': 'Miguel'}
@@ -116,5 +116,12 @@ def unfollow(username):
     flash('You are not following {}!'.format(username))
     return redirect(url_for('user',username=username))
 
+@app.route('/explore')
+@login_required
+def explore():
+    page = request.args.get('page',1,type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+
+    )
 if __name__ == '__main__':
     app.run()
